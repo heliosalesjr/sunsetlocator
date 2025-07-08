@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import SunsetList from './components/SunsetList';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+
 
 export default function Home() {
   return (
@@ -13,13 +12,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      
 
       <main className="flex-grow">
         <SunsetList />
       </main>
 
-      <Footer />
+     
     </div>
   );
 }

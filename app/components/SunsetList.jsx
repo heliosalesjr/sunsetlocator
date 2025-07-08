@@ -141,7 +141,7 @@ const SunsetList = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
+        <div className="absolute inset-0 "></div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
