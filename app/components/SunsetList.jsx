@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import SunsetCard from './SunsetCard';
 import { getSunsetsInNext30Minutes } from '../utils/sunsetUtils';
 import { cities } from '../utils/cities';
-import Link from 'next/link';
 
 const MiniSunsetCard = ({ city, onExpired }) => {
   const [isClient, setIsClient] = useState(false);
@@ -113,16 +112,12 @@ const SunsetList = () => {
 
   if (!isClient) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20">
         <div className="max-w-6xl mx-auto px-6 py-12">
           {/* Header */}
           <div className="relative overflow-hidden mb-12">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
             <div className="relative z-10 text-center">
-              <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20 mb-6">
-                <span className="text-orange-400 text-sm font-medium">🌅 GOLDEN HOUR ALERT</span>
-              </div>
-              
               <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
                 Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
               </h1>
@@ -130,10 +125,6 @@ const SunsetList = () => {
               <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
                 Discover the most beautiful sunsets happening around the world in the next 30 minutes
               </p>
-              
-              <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
-                <div className="text-white/60 text-sm">Loading...</div>
-              </div>
             </div>
           </div>
           
@@ -147,16 +138,12 @@ const SunsetList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20">
       {/* Header */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
           <div className="text-center">
-            <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20 mb-6">
-              <span className="text-orange-400 text-sm font-medium">🌅 GOLDEN HOUR ALERT</span>
-            </div>
-            
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
               Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
             </h1>
@@ -164,12 +151,6 @@ const SunsetList = () => {
             <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
               Discover the most beautiful sunsets happening around the world in the next 30 minutes
             </p>
-            
-            <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
-              <div className="text-white/60 text-sm">
-                Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -248,12 +229,12 @@ const SunsetList = () => {
           </div>
         )}
 
-        {/* Footer */}
+        {/* Last Updated - Movido para o final */}
         <div className="mt-16 text-center">
-          <div className="backdrop-blur-md bg-white/5 rounded-xl p-6 border border-white/10">
-            <p className="text-white/60 text-sm">
-              Powered by <Link href="/" className="text-orange-400 font-medium hover:text-orange-300 transition-colors">SunCalc</Link> & <span className="text-orange-400 font-medium">Pexels</span>
-            </p>
+          <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
+            <div className="text-white/60 text-sm">
+              Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+            </div>
           </div>
         </div>
       </div>
