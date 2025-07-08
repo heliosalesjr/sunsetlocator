@@ -35,16 +35,19 @@ const MiniSunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="bg-gradient-to-r from-orange-300 to-red-400 rounded-lg p-3 shadow-md text-white hover:shadow-lg transition-shadow">
-      <div className="text-center">
-        <h4 className="font-bold text-sm mb-1">{city.name}</h4>
-        <p className="text-orange-100 text-xs mb-2">{city.country}</p>
-        <div className="inline-flex items-center bg-black/20 backdrop-blur-sm rounded-full px-2 py-1 border border-white/20">
-          <div className="flex items-center space-x-1">
-            <div className="w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
-            <span className="font-mono text-xs font-bold">
-              {isClient ? timeRemaining : '--:--'}
-            </span>
+    <div className="relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer transform hover:scale-105 transition-all duration-300">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-red-500 to-purple-600"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+      
+      {/* Content */}
+      <div className="relative z-10 p-4 text-center">
+        <h4 className="font-bold text-white mb-1">{city.name}</h4>
+        <p className="text-white/80 text-xs mb-3">{city.country}</p>
+        
+        <div className="backdrop-blur-md bg-white/20 rounded-xl px-3 py-2 border border-white/30">
+          <div className="text-white font-mono text-sm font-bold">
+            {isClient ? timeRemaining : '--:--'}
           </div>
         </div>
       </div>
@@ -110,85 +113,149 @@ const SunsetList = () => {
 
   if (!isClient) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">🌅 Golden Hour Alert</h1>
-          <p className="text-gray-600 mb-4">Upcoming Sunsets for the next 30 minutes</p>
-          <div className="text-sm text-gray-500">Loading...</div>
-        </div>
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading sunset data...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          {/* Header */}
+          <div className="relative overflow-hidden mb-12">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
+            <div className="relative z-10 text-center">
+              <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20 mb-6">
+                <span className="text-orange-400 text-sm font-medium">🌅 GOLDEN HOUR ALERT</span>
+              </div>
+              
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+                Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
+              </h1>
+              
+              <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
+                Discover the most beautiful sunsets happening around the world in the next 30 minutes
+              </p>
+              
+              <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
+                <div className="text-white/60 text-sm">Loading...</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+            <p className="text-white/70">Loading sunset data...</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">🌅 Golden Hour Alert</h1>
-        <p className="text-gray-600 mb-4">Upcoming Sunsets for the next 30 minutes</p>
-        <div className="text-sm text-gray-500">
-          Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Header */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20 mb-6">
+              <span className="text-orange-400 text-sm font-medium">🌅 GOLDEN HOUR ALERT</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+              Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
+            </h1>
+            
+            <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
+              Discover the most beautiful sunsets happening around the world in the next 30 minutes
+            </p>
+            
+            <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
+              <div className="text-white/60 text-sm">
+                Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {upcomingSunsets.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="text-6xl mb-4">🌙</div>
-          <h2 className="text-2xl font-semibold text-gray-600 mb-2">No sunset for the next 30 minutes</h2>
-          <p className="text-gray-500">Try again soon!</p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          <div className="text-center mb-6">
-            <span className="inline-block bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
-              {upcomingSunsets.length} {upcomingSunsets.length === 1 ? 'city found' : 'cities found'}
-            </span>
+      {/* Content */}
+      <div className="max-w-6xl mx-auto px-6 pb-12">
+        {upcomingSunsets.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-8xl mb-6">🌙</div>
+            <h2 className="text-3xl font-bold text-white mb-4">No sunsets in the next 30 minutes</h2>
+            <p className="text-white/60 text-lg">Check back soon for the next golden hour!</p>
           </div>
-
-          {mainSunset && (
-            <div className="mb-6 flex flex-col lg:flex-row bg-white rounded-lg shadow overflow-hidden">
-              <div className="lg:w-2/3 p-4">
-                <SunsetCard key={mainSunset.name} city={mainSunset} onExpired={handleSunsetExpired} />
+        ) : (
+          <div className="space-y-12">
+            {/* Stats */}
+            <div className="text-center">
+              <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20">
+                <span className="text-white font-medium">
+                  {upcomingSunsets.length} {upcomingSunsets.length === 1 ? 'sunset found' : 'sunsets found'}
+                </span>
               </div>
-              {cityImage && (
-                <div className="lg:w-1/3 relative group overflow-hidden">
-                  <img
-                    src={cityImage}
-                    alt={mainSunset.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {cityPhotographer && (
-                    <div className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded">
-                      Photo by {cityPhotographer} / Pexels
+            </div>
+
+            {/* Main Sunset */}
+            {mainSunset && (
+              <div className="mb-12 flex flex-col lg:flex-row rounded-3xl shadow-2xl overflow-hidden">
+                <div className="lg:w-2/3 relative">
+                  {/* Imagem de fundo para o card principal */}
+                  {cityImage && (
+                    <div className="absolute inset-0 z-0">
+                      <img
+                        src={cityImage}
+                        alt={mainSunset.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
                     </div>
                   )}
+                  <SunsetCard key={mainSunset.name} city={mainSunset} onExpired={handleSunsetExpired} />
                 </div>
-              )}
-            </div>
-          )}
+                
+                {cityImage && (
+                  <div className="lg:w-1/3 relative group overflow-hidden">
+                    <img
+                      src={cityImage}
+                      alt={mainSunset.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    {cityPhotographer && (
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="backdrop-blur-md bg-black/40 text-white text-xs px-3 py-2 rounded-lg border border-white/20">
+                          📸 {cityPhotographer} / Pexels
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
 
-          {additionalSunsets.length > 0 && (
-            <div className="space-y-4">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Other upcoming sunsets</h3>
+            {/* Additional Sunsets */}
+            {additionalSunsets.length > 0 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">Other Upcoming Sunsets</h3>
+                  <p className="text-white/60">Don't miss these beautiful moments</p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  {additionalSunsets.map((city) => (
+                    <MiniSunsetCard key={city.name} city={city} onExpired={handleSunsetExpired} />
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                {additionalSunsets.map((city) => (
-                  <MiniSunsetCard key={city.name} city={city} onExpired={handleSunsetExpired} />
-                ))}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="mt-16 text-center">
+          <div className="backdrop-blur-md bg-white/5 rounded-xl p-6 border border-white/10">
+            <p className="text-white/60 text-sm">
+              Powered by <Link href="/" className="text-orange-400 font-medium hover:text-orange-300 transition-colors">SunCalc</Link> & <span className="text-orange-400 font-medium">Pexels</span>
+            </p>
+          </div>
         </div>
-      )}
-
-      <div className="mt-8 text-center text-sm text-gray-500">
-        <p>
-          Powered by the library <em><Link href="/">SunCalc</Link></em>
-        </p>
       </div>
     </div>
   );

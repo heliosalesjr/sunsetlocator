@@ -7,9 +7,14 @@ import { useState, useEffect } from 'react';
 const CountdownClient = dynamic(() => import('./Countdown'), {
   ssr: false,
   loading: () => (
-    <span className="font-mono text-lg font-bold text-orange-600">
-      --:--:--
-    </span>
+    <div className="backdrop-blur-md bg-white/10 rounded-3xl p-6 border border-white/20 inline-block">
+      <div className="text-5xl font-mono font-bold text-white mb-2 tracking-wider">
+        --:--:--
+      </div>
+      <div className="text-white/80 text-sm uppercase tracking-widest">
+        Until Sunset
+      </div>
+    </div>
   )
 });
 
@@ -57,88 +62,93 @@ const SunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="bg-gradient-to-r from-orange-400 to-red-500 rounded-lg p-6 shadow-lg text-white mb-4 hover:shadow-xl transition-shadow">
-      <div className="flex justify-between items-start mb-3">
-        <div>
-          <h3 className="text-xl font-bold">{city.name}</h3>
-          <p className="text-orange-100 text-sm">{city.country}</p>
+    <div className="relative overflow-hidden rounded-3xl shadow-2xl group">
+      {/* Background Image with Overlay - será preenchida pela imagem externa */}
+      <div className="absolute inset-0">
+        <div className="w-full h-full bg-gradient-to-br from-orange-400 via-red-500 to-purple-600"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 via-transparent to-purple-600/20"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 p-8 h-full flex flex-col justify-between min-h-[400px]">
+        {/* Header */}
+        <div className="flex justify-between items-start mb-6">
+          <div className="backdrop-blur-md bg-white/10 rounded-2xl p-4 border border-white/20">
+            <h3 className="text-2xl font-bold text-white mb-1">{city.name}</h3>
+            <p className="text-white/80 text-sm font-medium">{city.country}</p>
+          </div>
+          
+          {/* Live Indicator */}
+          <div className="backdrop-blur-md bg-red-500/90 rounded-full px-3 py-1 border border-white/20">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <span className="text-white text-xs font-bold">LIVE</span>
+            </div>
+          </div>
         </div>
-        <div className="text-right">
-          <div className="text-sm text-orange-100">Sunset in:</div>
+
+        {/* Countdown Center */}
+        <div className="text-center flex-1 flex items-center justify-center">
           {isClient ? (
             <CountdownClient 
               targetTime={city.sunsetTime} 
               onExpired={() => onExpired && onExpired(city)}
             />
           ) : (
-            <span className="font-mono text-lg font-bold text-orange-600">
-              --:--:--
-            </span>
+            <div className="backdrop-blur-md bg-white/10 rounded-3xl p-6 border border-white/20 inline-block">
+              <div className="text-5xl font-mono font-bold text-white mb-2 tracking-wider">
+                --:--:--
+              </div>
+              <div className="text-white/80 text-sm uppercase tracking-widest">
+                Until Sunset
+              </div>
+            </div>
           )}
         </div>
-      </div>
-      
-      <div className="border-t border-orange-300 pt-3 mt-3">
-        <div className="flex justify-between text-sm">
-          <span>Sunset time:</span>
-          <span className="font-mono">
-            {isClient ? formatSunsetTime(city.sunsetTime) : '--:--:--'}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm mt-1">
-          <span>Coordinates:</span>
-          <span className="font-mono">{city.lat.toFixed(2)}°, {city.lng.toFixed(2)}°</span>
-        </div>
-        {city.timezone && (
-          <div className="flex justify-between text-sm mt-1">
-            <span>Timezone:</span>
-            <span className="font-mono">{city.timezone}</span>
-          </div>
-        )}
-      </div>
-      
-      {/* Barra de Progresso Elegante */}
-      <div className="mt-4 space-y-3">
-        <div className="relative">
-          {/* Barra de fundo */}
-          <div className="w-full h-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30">
-            {/* Barra de progresso com gradiente animado */}
-            <div 
-              className="h-full bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
-              style={{ width: `${progress}%` }}
-            >
-              {/* Efeito de brilho animado */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"></div>
-            </div>
-          </div>
-          
-          {/* Ícone do sol na ponta direita */}
-          <div className="absolute -right-1 -top-2 w-7 h-7 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white/50">
-            <div className="text-xs">🌅</div>
-            {/* Raios do sol */}
-            <div className="absolute inset-0">
-              <div className="absolute -top-2 left-1/2 w-0.5 h-1.5 bg-yellow-300 transform -translate-x-1/2 rounded-full"></div>
-              <div className="absolute -bottom-2 left-1/2 w-0.5 h-1.5 bg-yellow-300 transform -translate-x-1/2 rounded-full"></div>
-              <div className="absolute -left-2 top-1/2 w-1.5 h-0.5 bg-yellow-300 transform -translate-y-1/2 rounded-full"></div>
-              <div className="absolute -right-2 top-1/2 w-1.5 h-0.5 bg-yellow-300 transform -translate-y-1/2 rounded-full"></div>
-            </div>
-          </div>
-          
-          {/* Countdown no canto esquerdo e label no direito */}
-          <div className="flex justify-between items-center mt-2">
-            {/* Countdown no canto esquerdo */}
-            <div className="inline-flex items-center bg-black/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
-              <div className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse"></div>
-                <span className="font-mono text-sm font-bold tracking-wider">
-                  {isClient ? timeRemaining : '--:--'}
-                </span>
+
+        {/* Bottom Info */}
+        <div className="space-y-6">
+          {/* Progress Bar */}
+          <div className="relative">
+            <div className="w-full h-2 bg-white/20 rounded-full backdrop-blur-sm">
+              <div 
+                className="h-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                style={{ width: `${progress}%` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
               </div>
             </div>
             
-            {/* Label sunset no canto direito */}
-            <span className="text-xs text-orange-100">Sunset</span>
+            {/* Sun Icon */}
+            <div className="absolute -right-2 -top-3 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white/50">
+              <div className="text-sm">🌅</div>
+            </div>
           </div>
+
+          {/* Info Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="backdrop-blur-md bg-white/10 rounded-xl p-3 border border-white/20">
+              <div className="text-white/70 text-xs uppercase tracking-wide mb-1">Sunset Time</div>
+              <div className="text-white font-mono text-sm">
+                {isClient ? formatSunsetTime(city.sunsetTime) : '--:--:--'}
+              </div>
+            </div>
+            
+            <div className="backdrop-blur-md bg-white/10 rounded-xl p-3 border border-white/20">
+              <div className="text-white/70 text-xs uppercase tracking-wide mb-1">Coordinates</div>
+              <div className="text-white font-mono text-sm">
+                {city.lat.toFixed(2)}°, {city.lng.toFixed(2)}°
+              </div>
+            </div>
+          </div>
+
+          {city.timezone && (
+            <div className="backdrop-blur-md bg-white/10 rounded-xl p-3 border border-white/20">
+              <div className="text-white/70 text-xs uppercase tracking-wide mb-1">Timezone</div>
+              <div className="text-white font-mono text-sm">{city.timezone}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>
