@@ -1,3 +1,4 @@
+// SunsetList.jsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -34,21 +35,11 @@ const MiniSunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer transform hover:scale-105 transition-all duration-300">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-red-500 to-purple-600"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-      
-      {/* Content */}
-      <div className="relative z-10 p-4 text-center">
-        <h4 className="font-bold text-white mb-1">{city.name}</h4>
-        <p className="text-white/80 text-xs mb-3">{city.country}</p>
-        
-        <div className="backdrop-blur-md bg-white/20 rounded-xl px-3 py-2 border border-white/30">
-          <div className="text-white font-mono text-sm font-bold">
-            {isClient ? timeRemaining : '--:--'}
-          </div>
-        </div>
+    <div className="bg-white border border-gray-200 shadow rounded-2xl p-4 text-center hover:shadow-md transition-all">
+      <h4 className="font-semibold text-gray-900 mb-1 text-base">{city.name}</h4>
+      <p className="text-gray-500 text-xs mb-3">{city.country}</p>
+      <div className="bg-gray-100 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-gray-700">
+        {isClient ? timeRemaining : '--:--'}
       </div>
     </div>
   );
@@ -76,15 +67,14 @@ const SunsetList = () => {
         },
       });
       const data = await response.json();
-      if (data.photos && data.photos.length > 0) {
+      if (data.photos?.length) {
         setCityImage(data.photos[0].src.landscape);
         setCityPhotographer(data.photos[0].photographer);
       } else {
         setCityImage(null);
         setCityPhotographer(null);
       }
-    } catch (error) {
-      console.error('Error fetching image:', error);
+    } catch {
       setCityImage(null);
       setCityPhotographer(null);
     }
@@ -97,115 +87,62 @@ const SunsetList = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (upcomingSunsets[0]) {
+      fetchCityImage(upcomingSunsets[0].name);
+    }
+  }, [upcomingSunsets]);
+
   const handleSunsetExpired = (expiredCity) => {
-    setUpcomingSunsets(prev => prev.filter(city => city.name !== expiredCity.name));
+    setUpcomingSunsets((prev) => prev.filter((c) => c.name !== expiredCity.name));
   };
+
+  if (!isClient) return null;
 
   const mainSunset = upcomingSunsets[0];
   const additionalSunsets = upcomingSunsets.slice(1);
 
-  useEffect(() => {
-    if (mainSunset) {
-      fetchCityImage(mainSunset.name);
-    }
-  }, [mainSunset]);
-
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          {/* Header */}
-          <div className="relative overflow-hidden mb-12">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10"></div>
-            <div className="relative z-10 text-center">
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-                Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
-              </h1>
-              
-              <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
-                Discover the most beautiful sunsets happening around the world in the next 30 minutes
-              </p>
-            </div>
-          </div>
-          
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-            <p className="text-white/70">Loading sunset data...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20">
-      {/* Header */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 "></div>
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-              Sunset <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tracker</span>
-            </h1>
-            
-            <p className="text-white/70 text-lg mb-6 max-w-2xl mx-auto">
-              Discover the most beautiful sunsets happening around the world in the next 30 minutes
-            </p>
-          </div>
+    <div className="min-h-screen bg-white pt-24">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">Sunset <span className="text-orange-500">Tracker</span></h1>
+          <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+            Discover the most beautiful sunsets happening around the world in the next 30 minutes.
+          </p>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="max-w-6xl mx-auto px-6 pb-12">
         {upcomingSunsets.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-8xl mb-6">🌙</div>
-            <h2 className="text-3xl font-bold text-white mb-4">No sunsets in the next 30 minutes</h2>
-            <p className="text-white/60 text-lg">Check back soon for the next golden hour!</p>
+          <div className="text-center py-32">
+            <div className="text-7xl mb-6">🌙</div>
+            <h2 className="text-2xl font-semibold text-gray-700 mb-2">No sunsets in the next 30 minutes</h2>
+            <p className="text-gray-400">Check back soon for the next golden hour!</p>
           </div>
         ) : (
           <div className="space-y-12">
-            {/* Stats */}
             <div className="text-center">
-              <div className="inline-block backdrop-blur-md bg-white/10 rounded-2xl px-6 py-3 border border-white/20">
-                <span className="text-white font-medium">
-                  {upcomingSunsets.length} {upcomingSunsets.length === 1 ? 'sunset found' : 'sunsets found'}
-                </span>
-              </div>
+              <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-medium">
+                {upcomingSunsets.length} {upcomingSunsets.length === 1 ? 'sunset found' : 'sunsets found'}
+              </span>
             </div>
 
             {/* Main Sunset */}
             {mainSunset && (
-              <div className="mb-12 flex flex-col lg:flex-row rounded-3xl shadow-2xl overflow-hidden">
-                <div className="lg:w-2/3 relative">
-                  {/* Imagem de fundo para o card principal */}
-                  {cityImage && (
-                    <div className="absolute inset-0 z-0">
-                      <img
-                        src={cityImage}
-                        alt={mainSunset.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <SunsetCard key={mainSunset.name} city={mainSunset} onExpired={handleSunsetExpired} />
+              <div className="mb-8 grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <SunsetCard city={mainSunset} onExpired={handleSunsetExpired} />
                 </div>
-                
+
                 {cityImage && (
-                  <div className="lg:w-1/3 relative group overflow-hidden">
+                  <div className="relative rounded-3xl overflow-hidden shadow-lg">
                     <img
                       src={cityImage}
                       alt={mainSunset.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    {cityPhotographer && (
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="backdrop-blur-md bg-black/40 text-white text-xs px-3 py-2 rounded-lg border border-white/20">
-                          📸 {cityPhotographer} / Pexels
-                        </div>
-                      </div>
-                    )}
+                    <div className="absolute bottom-0 left-0 right-0 bg-white/70 text-gray-800 text-xs p-2 text-center">
+                      📸 {cityPhotographer} / Pexels
+                    </div>
                   </div>
                 )}
               </div>
@@ -213,30 +150,28 @@ const SunsetList = () => {
 
             {/* Additional Sunsets */}
             {additionalSunsets.length > 0 && (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2">Other Upcoming Sunsets</h3>
-                  <p className="text-white/60">Don't miss these beautiful moments</p>
+                  <h3 className="text-xl font-semibold text-gray-900">Other Upcoming Sunsets</h3>
+                  <p className="text-gray-500 text-sm">Don't miss these beautiful moments</p>
                 </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {additionalSunsets.map((city) => (
                     <MiniSunsetCard key={city.name} city={city} onExpired={handleSunsetExpired} />
                   ))}
                 </div>
               </div>
             )}
-          </div>
-        )}
 
-        {/* Last Updated - Movido para o final */}
-        <div className="mt-16 text-center">
-          <div className="backdrop-blur-md bg-white/10 rounded-xl px-4 py-2 border border-white/20 inline-block">
-            <div className="text-white/60 text-sm">
-              Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+            {/* Last Updated */}
+            <div className="text-center mt-16">
+              <span className="text-xs text-gray-400">
+                Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+              </span>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
