@@ -16,21 +16,21 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/20 border-b border-white/10 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/10 border-b border-white/10 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="group">
             <div className="relative">
-              <h1 className="text-2xl font-bold text-white group-hover:text-orange-400 transition-all duration-300 transform group-hover:scale-105">
+              <h1 className="text-2xl font-bold text-slate-700 group-hover:text-orange-400 transition-all duration-300 transform group-hover:scale-105">
                 Sunset
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 group-hover:from-orange-300 group-hover:to-red-400 transition-all duration-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 group-hover:from-orange-300 group-hover:to-red-400 transition-all duration-300">
                   Tracker
                 </span>
               </h1>
               
               {/* Efeito de brilho no hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-red-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-yellow-500/10 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
             </div>
           </Link>
 
@@ -38,7 +38,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-6">
             <Link 
               href="/about" 
-              className="text-white/80 hover:text-white transition-colors duration-300 font-medium relative group"
+              className="text-slate-700 hover:text-slate=900 transition-colors duration-300 font-medium relative group"
             >
               About
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-red-500 group-hover:w-full transition-all duration-300"></span>
@@ -48,7 +48,7 @@ const Navbar = () => {
               href="https://github.com/heliosalesjr/sunsetlocator" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-white/80 hover:text-white transition-colors duration-300 font-medium relative group flex items-center space-x-1"
+              className="text-slate-700 hover:text-slate-900 transition-colors duration-300 font-medium relative group flex items-center space-x-1"
             >
               <span>Github</span>
               <svg className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
