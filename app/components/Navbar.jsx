@@ -25,7 +25,7 @@ const Navbar = () => {
               <h1 className="text-2xl font-bold text-white group-hover:text-orange-400 transition-all duration-300 transform group-hover:scale-105">
                 Sunset
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 group-hover:from-orange-300 group-hover:to-red-400 transition-all duration-300">
-                  Locator
+                  Tracker
                 </span>
               </h1>
               

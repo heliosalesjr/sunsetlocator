@@ -62,7 +62,7 @@ const SunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl shadow-2xl group">
+    <div className="relative overflow-hidden  shadow-2xl group">
       {/* Background Image with Overlay - será preenchida pela imagem externa */}
       <div className="absolute inset-0">
         <div className="w-full h-full bg-gradient-to-br from-orange-400 via-red-500 to-purple-600"></div>
