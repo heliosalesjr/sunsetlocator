@@ -51,6 +51,7 @@ const SunsetList = () => {
   const [isClient, setIsClient] = useState(false);
   const [cityImage, setCityImage] = useState(null);
   const [cityPhotographer, setCityPhotographer] = useState(null);
+  const [imageExpanded, setImageExpanded] = useState(false);
 
   const updateSunsets = () => {
     const now = new Date();
@@ -97,13 +98,23 @@ const SunsetList = () => {
     setUpcomingSunsets((prev) => prev.filter((c) => c.name !== expiredCity.name));
   };
 
+  const handleImageClick = () => {
+    if (!imageExpanded) {
+      setImageExpanded(true);
+    }
+  };
+
+  const handleCloseExpanded = () => {
+    setImageExpanded(false);
+  };
+
   if (!isClient) return null;
 
   const mainSunset = upcomingSunsets[0];
   const additionalSunsets = upcomingSunsets.slice(1);
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen bg-zinc-50 pt-24">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">Sunset <span className="text-orange-500">Tracker</span></h1>
@@ -128,23 +139,83 @@ const SunsetList = () => {
 
             {/* Main Sunset */}
             {mainSunset && (
-              <div className="mb-8 grid lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                  <SunsetCard city={mainSunset} onExpired={handleSunsetExpired} />
-                </div>
+              <div className="mb-8">
+                <div className="grid lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <SunsetCard city={mainSunset} onExpired={handleSunsetExpired} />
+                  </div>
 
-                {cityImage && (
-                  <div className="relative rounded-3xl overflow-hidden shadow-lg">
+                  {cityImage && (
+                    <div className="relative rounded-3xl overflow-hidden shadow-lg h-64 lg:h-auto cursor-pointer group">
+                      <div
+                        className="relative h-full"
+                        onClick={handleImageClick}
+                      >
+                        <img
+                          src={cityImage}
+                          alt={mainSunset.name}
+                          className="w-full h-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:brightness-110"
+                        />
+                        
+                        {/* Overlay de hover */}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 ease-in-out"></div>
+                        
+                        {/* Indicador de clique */}
+                        <div className="absolute top-4 right-4 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
+                          <svg 
+                            className="w-4 h-4 text-gray-700" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                          </svg>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 right-0 bg-white/70 text-gray-800 text-xs p-2 text-center">
+                          📸 {cityPhotographer} / Pexels
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Modal da imagem expandida */}
+            {imageExpanded && cityImage && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 transition-all duration-500 ease-in-out">
+                <div className="relative max-w-6xl max-h-[90vh] w-full">
+                  {/* Botão fechar */}
+                  <button
+                    onClick={handleCloseExpanded}
+                    className="absolute -top-12 right-0 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 z-10"
+                  >
+                    <svg 
+                      className="w-6 h-6 text-gray-800" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+
+                  {/* Imagem expandida */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-700 ease-in-out scale-100">
                     <img
                       src={cityImage}
                       alt={mainSunset.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto max-h-[80vh] object-contain"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-white/70 text-gray-800 text-xs p-2 text-center">
-                      📸 {cityPhotographer} / Pexels
+                    
+                    {/* Informações do fotógrafo */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white p-4">
+                      <p className="font-medium">📸 {cityPhotographer}</p>
+                      <p className="text-sm opacity-80">via Pexels • {mainSunset.name}</p>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             )}
 
