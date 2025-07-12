@@ -27,7 +27,7 @@ const Countdown = ({ targetTime, onExpired }) => {
   }, [targetTime, onExpired]);
 
   return (
-    <span className="font-mono text-lg font-bold text-orange-600">
+    <span className="font-mono text-5xl font-bold text-orange-500">
       {timeRemaining}
     </span>
   );
