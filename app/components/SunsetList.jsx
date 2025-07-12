@@ -116,20 +116,25 @@ const SunsetList = () => {
   return (
     <div className="min-h-screen bg-zinc-50 pt-24">
       <div className="max-w-5xl mx-auto px-6">
+        {/* Hero Section - Dinâmico */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">Sunset <span className="text-orange-500">Tracker</span></h1>
-          <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-            Discover the most beautiful sunsets happening around the world in the next 30 minutes.
-          </p>
+          {upcomingSunsets.length > 0 ? (
+            <>
+              <h1 className="text-4xl md:text-5xl font-bold text-orange-500">Golden Hour <span className="text-slate-600">Alert!</span></h1>
+              <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+                Discover the most beautiful sunsets happening around the world in the next 30 minutes.
+              </p>
+            </>
+          ) : (
+            <div className="py-16">
+              <div className="text-7xl mb-6">🌙</div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">No sunsets in the next 30 minutes</h1>
+              <p className="text-gray-500 text-lg">Check back soon for the next golden hour!</p>
+            </div>
+          )}
         </div>
 
-        {upcomingSunsets.length === 0 ? (
-          <div className="text-center py-32">
-            <div className="text-7xl mb-6">🌙</div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-2">No sunsets in the next 30 minutes</h2>
-            <p className="text-gray-400">Check back soon for the next golden hour!</p>
-          </div>
-        ) : (
+        {upcomingSunsets.length > 0 && (
           <div className="space-y-12">
             <div className="text-center">
               <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-medium">
