@@ -11,7 +11,7 @@ export const getSunsetTime = (lat, lng, date = new Date()) => {
 export const getSunsetsInNext30Minutes = (cities, currentTime = null) => {
 
   const now = currentTime || new Date();
-  const thirtyMinutesFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+  const thirtyMinutesFromNow = new Date(now.getTime() + 30 * 60 * 1000);
   
   return cities
     .map(city => {

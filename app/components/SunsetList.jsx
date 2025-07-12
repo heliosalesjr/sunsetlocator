@@ -128,7 +128,7 @@ const SunsetList = () => {
           ) : (
             <div className="py-16">
               <div className="text-7xl mb-6">🌙</div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">No sunsets in the next 30 minutes</h1>
+              <h1 className="text-4xl md:text-4xl font-bold text-slate-600 mb-4">No sunsets in the next 30 minutes</h1>
               <p className="text-gray-500 text-lg">Check back soon for the next golden hour!</p>
             </div>
           )}
