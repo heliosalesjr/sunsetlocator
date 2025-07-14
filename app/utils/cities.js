@@ -165,5 +165,48 @@ export const cities = [
     
     // UTC+13/+14 (Pacific Islands)
     { name: "Nuku'alofa", country: "Tonga", lat: -21.1789, lng: -175.1982, timezone: "UTC+13" },
-    { name: "Apia", country: "Samoa", lat: -13.8333, lng: -171.7500, timezone: "UTC+13" }
+    { name: "Apia", country: "Samoa", lat: -13.8333, lng: -171.7500, timezone: "UTC+13" },
+    { name: "Pago Pago", country: "American Samoa", lat: -14.2781, lng: -170.7025, timezone: "UTC-11" },
+    { name: "Niue", country: "Niue", lat: -19.0544, lng: -169.8672, timezone: "UTC-11" },
+    
+    // UTC-9 (apenas 1 cidade na lista original)
+    { name: "Fairbanks", country: "USA", lat: 64.8378, lng: -147.7164, timezone: "UTC-9" },
+    { name: "Sitka", country: "USA", lat: 57.0531, lng: -135.3300, timezone: "UTC-9" },
+    
+    // UTC-2 (apenas 2 cidades na lista original)
+    { name: "Grytviken", country: "South Georgia", lat: -54.2806, lng: -36.5078, timezone: "UTC-2" },
+    { name: "Stanley", country: "Falkland Islands", lat: -51.6938, lng: -57.8597, timezone: "UTC-2" },
+    
+    // UTC-1 (apenas 2 cidades na lista original)
+    { name: "Praia", country: "Cape Verde", lat: 14.9177, lng: -23.5092, timezone: "UTC-1" },
+    { name: "Scoresbysund", country: "Greenland", lat: 70.4842, lng: -21.9756, timezone: "UTC-1" },
+    
+    // UTC+4 (apenas 5 cidades na lista original)
+    { name: "Doha", country: "Qatar", lat: 25.2854, lng: 51.5310, timezone: "UTC+4" },
+    { name: "Muscat", country: "Oman", lat: 23.5859, lng: 58.4059, timezone: "UTC+4" },
+    { name: "Port Louis", country: "Mauritius", lat: -20.1619, lng: 57.5012, timezone: "UTC+4" },
+    
+    // UTC+5 (apenas 4 cidades na lista original)
+    { name: "Dushanbe", country: "Tajikistan", lat: 38.5598, lng: 68.7870, timezone: "UTC+5" },
+    { name: "Ashgabat", country: "Turkmenistan", lat: 37.9601, lng: 58.3261, timezone: "UTC+5" },
+    { name: "Samarkand", country: "Uzbekistan", lat: 39.6270, lng: 66.9750, timezone: "UTC+5" },
+    
+    // UTC+6 (apenas 3 cidades na lista original)
+    { name: "Thimphu", country: "Bhutan", lat: 27.4728, lng: 89.6390, timezone: "UTC+6" },
+    { name: "Almaty", country: "Kazakhstan", lat: 43.2220, lng: 76.8512, timezone: "UTC+6" },
+    { name: "Omsk", country: "Russia", lat: 54.9924, lng: 73.3686, timezone: "UTC+6" },
+    
+    // UTC+7 (apenas 5 cidades na lista original)
+    { name: "Vientiane", country: "Laos", lat: 17.9757, lng: 102.6331, timezone: "UTC+7" },
+    { name: "Yangon", country: "Myanmar", lat: 16.8661, lng: 96.1951, timezone: "UTC+7" },
+    { name: "Novosibirsk", country: "Russia", lat: 55.0084, lng: 82.9357, timezone: "UTC+7" },
+    
+    // UTC+11 (apenas 2 cidades na lista original)
+    { name: "Vladivostok", country: "Russia", lat: 43.1056, lng: 131.8735, timezone: "UTC+11" },
+    { name: "Magadan", country: "Russia", lat: 59.5684, lng: 150.8048, timezone: "UTC+11" },
+    { name: "Vanuatu", country: "Vanuatu", lat: -17.7334, lng: 168.3273, timezone: "UTC+11" },
+    
+    // UTC+13 (apenas 2 cidades na lista original)
+    { name: "Kiritimati", country: "Kiribati", lat: 1.9721, lng: -157.4778, timezone: "UTC+13" },
+    { name: "Chatham Islands", country: "New Zealand", lat: -43.9500, lng: -176.5500, timezone: "UTC+12:45" } // Fuso único
   ];
