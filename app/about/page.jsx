@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from 'react';
+import Navbar from '../components/Navbar';
 
 const About = () => {
   const [expandedTech, setExpandedTech] = useState(null);
@@ -70,6 +71,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-zinc-50">
       {/* Hero Section */}
+      <Navbar />
       <div className="bg-gradient-to-br from-orange-50 to-amber-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
