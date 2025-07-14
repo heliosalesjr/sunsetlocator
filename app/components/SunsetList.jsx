@@ -52,6 +52,7 @@ const SunsetList = () => {
   const [cityImage, setCityImage] = useState(null);
   const [cityPhotographer, setCityPhotographer] = useState(null);
   const [imageExpanded, setImageExpanded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const updateSunsets = () => {
     const now = new Date();
@@ -101,12 +102,39 @@ const SunsetList = () => {
   const handleImageClick = () => {
     if (!imageExpanded) {
       setImageExpanded(true);
+      setImageLoaded(false);
+      // Prevenir scroll do body
+      document.body.style.overflow = 'hidden';
     }
   };
 
   const handleCloseExpanded = () => {
     setImageExpanded(false);
+    setImageLoaded(false);
+    // Restaurar scroll do body
+    document.body.style.overflow = 'unset';
   };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  // Fechar modal com ESC
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        handleCloseExpanded();
+      }
+    };
+    
+    if (imageExpanded) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [imageExpanded]);
 
   if (!isClient) return null;
 
@@ -189,36 +217,65 @@ const SunsetList = () => {
 
             {/* Modal da imagem expandida */}
             {imageExpanded && cityImage && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 transition-all duration-500 ease-in-out">
-                <div className="relative max-w-6xl max-h-[90vh] w-full">
-                  {/* Botão fechar */}
-                  <button
-                    onClick={handleCloseExpanded}
-                    className="absolute -top-12 right-0 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 z-10"
-                  >
-                    <svg 
-                      className="w-6 h-6 text-gray-800" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-
+              <div 
+                className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black transition-all duration-500 ease-out ${
+                  imageExpanded ? 'bg-opacity-90' : 'bg-opacity-0'
+                }`}
+                onClick={handleCloseExpanded}
+              >
+                <div 
+                  className={`relative max-w-6xl max-h-[90vh] w-full transform transition-all duration-700 ease-out ${
+                    imageExpanded && imageLoaded 
+                      ? 'scale-100 opacity-100 translate-y-0' 
+                      : 'scale-95 opacity-0 translate-y-4'
+                  }`}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {/* Imagem expandida */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-700 ease-in-out scale-100">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                     <img
                       src={cityImage}
                       alt={mainSunset.name}
                       className="w-full h-auto max-h-[80vh] object-contain"
+                      onLoad={handleImageLoad}
                     />
                     
+                    {/* Botão fechar - DENTRO da imagem */}
+                    <button
+                      onClick={handleCloseExpanded}
+                      className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 group"
+                    >
+                      <svg 
+                        className="w-5 h-5 text-white group-hover:rotate-90 transition-transform duration-300" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                    
                     {/* Informações do fotógrafo */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white p-4">
-                      <p className="font-medium">📸 {cityPhotographer}</p>
-                      <p className="text-sm opacity-80">via Pexels • {mainSunset.name}</p>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-lg flex items-center gap-2">
+                            📸 {cityPhotographer}
+                          </p>
+                          <p className="text-sm opacity-80">via Pexels • {mainSunset.name}</p>
+                        </div>
+                        <div className="text-right text-sm opacity-70">
+                          <p>Press ESC to close</p>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Loading spinner */}
+                    {!imageLoaded && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+                        <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
