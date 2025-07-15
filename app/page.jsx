@@ -1,3 +1,4 @@
+import Footer from './components/Footer';
 import SunsetList from './components/SunsetList';
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow">
         <SunsetList />
+        <Footer />
       </main>
     </div>
   );

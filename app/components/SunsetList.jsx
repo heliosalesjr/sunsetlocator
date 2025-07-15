@@ -315,7 +315,7 @@ const SunsetList = () => {
               )}
 
               {/* Last Updated */}
-              <div className="text-center mt-16">
+              <div className="text-center mt-16 ">
                 <span className="text-xs text-gray-500">
                   Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
                 </span>
