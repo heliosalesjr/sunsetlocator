@@ -36,10 +36,10 @@ const MiniSunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="bg-white border border-gray-200 shadow rounded-2xl p-4 text-center hover:shadow-md transition-all">
-      <h4 className="font-semibold text-gray-900 mb-1 text-base">{city.name}</h4>
+    <div className="bg-gradient-to-br from-white to-slate-50 border border-orange-200 shadow-md rounded-2xl p-4 text-center hover:shadow-xl hover:shadow-orange-300/30 transition-all duration-300 hover:scale-105 hover:border-orange-300 group">
+      <h4 className="font-semibold text-gray-900 mb-1 text-base group-hover:text-orange-700 transition-colors duration-300">{city.name}</h4>
       <p className="text-gray-500 text-xs mb-3">{city.country}</p>
-      <div className="bg-gray-100 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-gray-700">
+      <div className="bg-gradient-to-r from-orange-200 to-amber-200 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-orange-800 group-hover:from-orange-300 group-hover:to-amber-300 transition-all duration-300">
         {isClient ? timeRemaining : '--:--'}
       </div>
     </div>
@@ -151,7 +151,7 @@ const SunsetList = () => {
   const additionalSunsets = upcomingSunsets.slice(1);
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-gradient-to-br from-white via-stone-50 to-slate-50">
       <Navbar />
       <div className="pt-24">
         <div className="max-w-5xl mx-auto px-6">
@@ -159,16 +159,16 @@ const SunsetList = () => {
           <div className="text-center mb-12">
             {upcomingSunsets.length > 0 ? (
               <>
-                <h1 className="text-4xl md:text-5xl font-bold text-orange-500">Golden Hour <span className="text-slate-600">Alert!</span></h1>
-                <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+                <h1 className="text-4xl md:text-5xl font-bold text-orange-600">Golden Hour <span className="text-red-500">Alert!</span></h1>
+                <p className="text-gray-600 mt-4 max-w-xl mx-auto">
                   Discover the most beautiful sunsets happening around the world in the next 30 minutes.
                 </p>
               </>
             ) : (
               <div className="py-16">
                 <div className="text-7xl mb-6">🌙</div>
-                <h1 className="text-4xl md:text-4xl font-bold text-slate-600 mb-4">No sunsets in the next 30 minutes</h1>
-                <p className="text-gray-500 text-lg">Check back soon for the next golden hour!</p>
+                <h1 className="text-4xl md:text-4xl font-bold text-orange-600 mb-4">No sunsets in the next 30 minutes</h1>
+                <p className="text-gray-600 text-lg">Check back soon for the next golden hour!</p>
               </div>
             )}
           </div>
@@ -176,7 +176,7 @@ const SunsetList = () => {
           {upcomingSunsets.length > 0 && (
             <div className="space-y-12">
               <div className="text-center">
-                <span className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="inline-block bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full text-sm font-semibold shadow-lg">
                   {upcomingSunsets.length} {upcomingSunsets.length === 1 ? 'sunset found' : 'sunsets found'}
                 </span>
               </div>
@@ -190,7 +190,7 @@ const SunsetList = () => {
                     </div>
 
                     {cityImage && (
-                      <div className="relative rounded-3xl overflow-hidden shadow-lg h-64 lg:h-auto cursor-pointer group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-xl shadow-orange-300/40 h-64 lg:h-auto cursor-pointer group border-2 border-orange-200">
                         <div
                           className="relative h-full"
                           onClick={handleImageClick}
@@ -202,12 +202,12 @@ const SunsetList = () => {
                           />
                           
                           {/* Overlay de hover */}
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 ease-in-out"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-orange-600/20 via-transparent to-transparent group-hover:from-orange-600/40 transition-all duration-300 ease-in-out"></div>
                           
                           {/* Indicador de clique */}
-                          <div className="absolute top-4 right-4 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
+                          <div className="absolute top-4 right-4 bg-orange-500 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out shadow-lg">
                             <svg 
-                              className="w-4 h-4 text-gray-700" 
+                              className="w-4 h-4 text-white" 
                               fill="none" 
                               stroke="currentColor" 
                               viewBox="0 0 24 24"
@@ -216,7 +216,7 @@ const SunsetList = () => {
                             </svg>
                           </div>
 
-                          <div className="absolute bottom-0 left-0 right-0 bg-white/70 text-gray-800 text-xs p-2 text-center">
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white text-xs p-2 text-center">
                             📸 {cityPhotographer} / Pexels
                           </div>
                         </div>
@@ -302,8 +302,8 @@ const SunsetList = () => {
               {additionalSunsets.length > 0 && (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-gray-900">Other Upcoming Sunsets</h3>
-                    <p className="text-gray-500 text-sm">Don't miss these beautiful moments</p>
+                    <h3 className="text-xl font-semibold text-orange-700">Other Upcoming Sunsets</h3>
+                    <p className="text-gray-600 text-sm">Don't miss these beautiful moments</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -316,7 +316,7 @@ const SunsetList = () => {
 
               {/* Last Updated */}
               <div className="text-center mt-16">
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-500">
                   Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
                 </span>
               </div>
