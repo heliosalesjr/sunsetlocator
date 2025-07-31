@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import SunsetCard from './SunsetCard';
 import Navbar from './Navbar';
-import { getSunsetsInNext30Minutes } from '../utils/sunsetUtils';
+import { getSunsetsInNext30Minutes, getRecentSunsets, formatSunsetTime } from '../utils/sunsetUtils';
 import { cities } from '../utils/cities';
 
 const MiniSunsetCard = ({ city, onExpired }) => {
@@ -46,8 +46,24 @@ const MiniSunsetCard = ({ city, onExpired }) => {
   );
 };
 
+const RecentSunsetCard = ({ city }) => {
+  return (
+    <div className="bg-gradient-to-br from-purple-50 to-indigo-100 border border-purple-200 shadow-md rounded-2xl p-4 text-center hover:shadow-xl hover:shadow-purple-300/30 transition-all duration-300 hover:scale-105 hover:border-purple-300 group">
+      <h4 className="font-semibold text-purple-900 mb-1 text-base group-hover:text-purple-700 transition-colors duration-300">{city.name}</h4>
+      <p className="text-purple-600 text-xs mb-2">{city.country}</p>
+      <div className="bg-gradient-to-r from-purple-200 to-indigo-200 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-purple-800 mb-2 group-hover:from-purple-300 group-hover:to-indigo-300 transition-all duration-300">
+        {formatSunsetTime(city.sunsetTime)}
+      </div>
+      <p className="text-xs text-purple-500 flex items-center justify-center gap-1">
+        <span>🕒</span> {city.timeAgo}
+      </p>
+    </div>
+  );
+};
+
 const SunsetList = () => {
   const [upcomingSunsets, setUpcomingSunsets] = useState([]);
+  const [recentSunsets, setRecentSunsets] = useState([]);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [isClient, setIsClient] = useState(false);
   const [cityImage, setCityImage] = useState(null);
@@ -60,6 +76,15 @@ const SunsetList = () => {
     const now = new Date();
     const sunsets = getSunsetsInNext30Minutes(cities);
     setUpcomingSunsets(sunsets);
+    
+    // Se não há sunsets próximos, buscar os recentes
+    if (sunsets.length === 0) {
+      const recent = getRecentSunsets(cities);
+      setRecentSunsets(recent);
+    } else {
+      setRecentSunsets([]);
+    }
+    
     setLastUpdate(now);
   };
 
@@ -151,7 +176,7 @@ const SunsetList = () => {
   const additionalSunsets = upcomingSunsets.slice(1);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-stone-50 to-slate-50">
+    <div className="min-h-screen ">
       <Navbar />
       <div className="pt-24">
         <div className="max-w-5xl mx-auto px-6">
@@ -316,6 +341,29 @@ const SunsetList = () => {
 
               {/* Last Updated */}
               <div className="text-center mt-16 ">
+                <span className="text-xs text-gray-500">
+                  Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Recent Sunsets - Mostrar quando não há sunsets próximos */}
+          {upcomingSunsets.length === 0 && recentSunsets.length > 0 && (
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-purple-700 mb-2">Recent Sunsets</h2>
+                <p className="text-purple-600">Here are the last 3 sunsets that happened around the world</p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {recentSunsets.map((city, index) => (
+                  <RecentSunsetCard key={`${city.name}-${index}`} city={city} />
+                ))}
+              </div>
+
+              {/* Last Updated */}
+              <div className="text-center mt-16">
                 <span className="text-xs text-gray-500">
                   Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString('pt-BR') : '--:--:--'}
                 </span>

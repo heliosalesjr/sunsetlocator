@@ -1,4 +1,3 @@
-
 import SunCalc from 'suncalc';
 import { formatDistanceToNow, format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
@@ -9,9 +8,8 @@ export const getSunsetTime = (lat, lng, date = new Date()) => {
 };
 
 export const getSunsetsInNext30Minutes = (cities, currentTime = null) => {
-
   const now = currentTime || new Date();
-  const thirtyMinutesFromNow = new Date(now.getTime() + 30 * 60 * 1000);
+  const thirtyMinutesFromNow = new Date(now.getTime() + 3 * 60 * 1000);
   
   return cities
     .map(city => {
@@ -26,6 +24,23 @@ export const getSunsetsInNext30Minutes = (cities, currentTime = null) => {
       return city.sunsetTime >= now && city.sunsetTime <= thirtyMinutesFromNow;
     })
     .sort((a, b) => a.sunsetTime - b.sunsetTime);
+};
+
+export const getRecentSunsets = (cities, currentTime = null) => {
+  const now = currentTime || new Date();
+  
+  return cities
+    .map(city => {
+      const sunsetTime = getSunsetTime(city.lat, city.lng);
+      return {
+        ...city,
+        sunsetTime,
+        timeAgo: formatDistanceToNow(sunsetTime, { addSuffix: true, locale: enUS })
+      };
+    })
+    .filter(city => city.sunsetTime < now) // Apenas sunsets que já aconteceram
+    .sort((a, b) => b.sunsetTime - a.sunsetTime) // Ordenar do mais recente para o mais antigo
+    .slice(0, 3); // Pegar apenas os 3 mais recentes
 };
 
 export const formatTimeRemaining = (targetTime, currentTime = null) => {
