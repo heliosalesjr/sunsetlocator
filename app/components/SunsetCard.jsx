@@ -41,7 +41,7 @@ const SunsetCard = ({ city, onExpired }) => {
           <h2 className="text-2xl font-semibold text-gray-900">{city.name}</h2>
           <p className="text-gray-500 text-sm">{city.country}</p>
         </div>
-        <div className="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">LIVE</div>
+        <div className="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">HAPPENING NOW</div>
       </div>
 
       {/* Countdown - Bem maior e centralizado */}
