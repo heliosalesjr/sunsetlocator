@@ -36,7 +36,7 @@ const ImageModal = ({
 
   return (
     <div 
-      className={`fixed inset-0 z-9999 flex items-center justify-center p-4 bg-black transition-all duration-500 ease-out ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 transition-all duration-500 ease-out ${
         isClosing ? 'bg-opacity-0' : 'bg-opacity-90'
       }`}
       onClick={onClose}
@@ -88,9 +88,7 @@ const ImageModal = ({
                 </p>
                 <p className="text-sm opacity-80">via Pexels • {cityName}</p>
               </div>
-              <div className="text-right text-sm opacity-70">
-                <p>Press ESC to close</p>
-              </div>
+              
             </div>
           </div>
 

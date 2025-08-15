@@ -30,11 +30,34 @@ const MiniSunsetCard = ({ city, onExpired }) => {
   }, [isClient, city.sunsetTime, onExpired]);
 
   return (
-    <div className="bg-gradient-to-br from-white to-slate-50 border border-orange-200 shadow-md rounded-2xl p-4 text-center hover:shadow-xl hover:shadow-orange-300/30 transition-all duration-300 hover:scale-105 hover:border-orange-300 group">
-      <h4 className="font-semibold text-gray-900 mb-1 text-base group-hover:text-orange-700 transition-colors duration-300">{city.name}</h4>
-      <p className="text-gray-500 text-xs mb-3">{city.country}</p>
-      <div className="bg-gradient-to-r from-orange-200 to-amber-200 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-orange-800 group-hover:from-orange-300 group-hover:to-amber-300 transition-all duration-300">
-        {isClient ? timeRemaining : '--:--'}
+    <div className="group relative glass rounded-2xl overflow-hidden hover:shadow-sunset transition-all duration-500 hover:scale-105 border border-orange-100/50">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-rose-50/60 group-hover:from-orange-100/60 group-hover:via-amber-100/40 group-hover:to-rose-100/60 transition-all duration-500"></div>
+      
+      <div className="relative p-5 text-center">
+        {/* Header */}
+        <div className="mb-4">
+          <h4 className="font-bold text-slate-800 text-lg font-display group-hover:text-gradient-sunset transition-all duration-300">{city.name}</h4>
+          <p className="text-slate-600 text-sm font-medium">{city.country}</p>
+        </div>
+
+        {/* Countdown Display */}
+        <div className="mb-4">
+          <div className="inline-block bg-gradient-to-r from-orange-500 to-rose-500 rounded-2xl px-4 py-3 shadow-lg group-hover:shadow-xl transition-all duration-300">
+            <div className="text-2xl font-mono font-bold text-white tracking-wider">
+              {isClient ? timeRemaining : '--:--'}
+            </div>
+          </div>
+        </div>
+
+        {/* Status indicator */}
+        <div className="flex items-center justify-center gap-2 text-sm text-slate-600 font-medium">
+          <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+          <span>minutes left</span>
+        </div>
+
+        {/* Hover effect overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
       </div>
     </div>
   );

@@ -3,15 +3,40 @@ import { formatSunsetTime } from '../utils/sunsetUtils';
 
 const RecentSunsetCard = ({ city }) => {
   return (
-    <div className="bg-white/50 shadow-md rounded-2xl p-4 text-center hover:shadow-xl hover:shadow-purple-300/30 transition-all duration-300 hover:scale-105 hover:border-purple-300 group">
-      <h4 className="font-semibold text-purple-900 mb-1 text-base group-hover:text-purple-700 transition-colors duration-300">{city.name}</h4>
-      <p className="text-purple-900 text-xs mb-2">{city.country}</p>
-      <div className="bg-gradient-to-r from-purple-200 to-indigo-200 rounded-xl px-3 py-2 inline-block text-sm font-mono font-bold text-purple-800 mb-2 group-hover:from-purple-300 group-hover:to-indigo-300 transition-all duration-300">
-        {formatSunsetTime(city.sunsetTime)}
+    <div className="group relative glass rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-500 hover:scale-105 border border-purple-100/50">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/60 via-indigo-50/40 to-slate-50/60 group-hover:from-purple-100/60 group-hover:via-indigo-100/40 group-hover:to-slate-100/60 transition-all duration-500"></div>
+      
+      <div className="relative p-5 text-center">
+        {/* Header */}
+        <div className="mb-4">
+          <h4 className="font-bold text-slate-800 text-lg font-display group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-indigo-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">{city.name}</h4>
+          <p className="text-slate-600 text-sm font-medium">{city.country}</p>
+        </div>
+
+        {/* Time Display */}
+        <div className="mb-4">
+          <div className="inline-block bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl px-4 py-3 shadow-lg group-hover:shadow-xl transition-all duration-300">
+            <div className="text-lg font-mono font-bold text-white tracking-wider">
+              {formatSunsetTime(city.sunsetTime)}
+            </div>
+          </div>
+        </div>
+
+        {/* Status indicator */}
+        <div className="flex items-center justify-center gap-2 text-sm text-slate-600 font-medium">
+          <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+          <span>{city.timeAgo}</span>
+        </div>
+
+        {/* Past sunset icon */}
+        <div className="absolute top-3 right-3 text-lg opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+          🌆
+        </div>
+
+        {/* Hover effect overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
       </div>
-      <p className="text-xs text-purple-500 flex items-center justify-center gap-1">
-        <span>🕒</span> {city.timeAgo}
-      </p>
     </div>
   );
 };
